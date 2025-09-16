@@ -88,12 +88,15 @@ app.get('/fetch', async (req, res) => {
         await context.exposeBinding('cryptoLog', async (_source, payload) => {
             const d = reviveDeep(payload);
             if (!d.args) return;
+
             d.args.forEach((a) => {
                 const u8 = asBytes(a);
                 if (!u8) return;
+            
                 if (u8.length === 294) {
                     Pki_key = Buffer.from(u8).toString('base64');
                 }
+            
                 if (u8.length > 7000) {
                     VM_bda = Buffer.from(u8).toString('base64');
                 }
